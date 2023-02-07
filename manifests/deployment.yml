@@ -1,0 +1,30 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: cicdtest 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cicdtest
+  template:
+    metadata:
+      labels:
+        app: cicdtest 
+    spec:
+      containers:
+        - name: cicdtest 
+          image: jenkinsregtest.azurecr.io/cicdtest
+          ports:
+          - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: cicdtest
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 80 
+    selector:
+        app: cicdtest
